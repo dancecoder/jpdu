@@ -5,8 +5,8 @@ package org.dancecoder.smailer.pdu;
  * see3GPP TS 23.040 [9.2.3.11]
  */
 public class TimeStamp {
-	
-	public static final int TIME_STAMP_LENGTH = 7;
+
+  public static final int TIME_STAMP_LENGTH = 7;
   
   private static final int TIME_STAMP_YEAR_POS = 0;
   private static final int TIME_STAMP_MONTH_POS = 1;
@@ -15,14 +15,14 @@ public class TimeStamp {
   private static final int TIME_STAMP_MINUTE_POS = 4;
   private static final int TIME_STAMP_SECOND_POS = 5;
   private static final int TIME_STAMP_TIMEZONE_POS = 6;
-	
-	private final byte[] bytes;
-	private final int index;
-		
-	public TimeStamp(byte[] bytes, int from) {
-		this.bytes = bytes;
-		this.index = from;
-	}
+
+  private final byte[] bytes;
+  private final int index;
+
+  public TimeStamp(byte[] bytes, int from) {
+    this.bytes = bytes;
+    this.index = from;
+  }
 
   public int getYear() {
     return Convert.semioctetsToInteger(bytes[TIME_STAMP_YEAR_POS + index]);

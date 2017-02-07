@@ -6,12 +6,12 @@ package org.dancecoder.smailer.pdu;
  * see 3GPP TS 23.038 [4]
  */
 public class DataCodingScheme {
-	
-	byte field;
-	
-	public DataCodingScheme(byte pduField) {
-		field = pduField;
-	}
+
+  byte field;
+
+  public DataCodingScheme(byte pduField) {
+    field = pduField;
+  }
 
   public MessageGroup getMessageGroup() {
     if (field == 0) {

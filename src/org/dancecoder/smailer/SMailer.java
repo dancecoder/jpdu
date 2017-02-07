@@ -13,15 +13,15 @@ import org.dancecoder.smailer.pdu.WrongMessageTypeException;
 
 public class SMailer {
 
-	public static void main(String[] args) throws WrongMessageTypeException {
+  public static void main(String[] args) throws WrongMessageTypeException {
 
     try(Gateway gateway = new ModemGateway("COM5")) {
       gateway.initialize();
       //try {
-      //	UssdResponse rsp = gateway.sendUssd("*105#");
-      //	System.out.println(rsp.getValue());
-      //}	catch(UnsupportedEncodingException e) {
-      //	System.out.print(e);
+      //  UssdResponse rsp = gateway.sendUssd("*105#");
+      //  System.out.println(rsp.getValue());
+      //} catch(UnsupportedEncodingException e) {
+      //  System.out.print(e);
       //}
 
       List<MessageListItem> msgList = gateway.getSmsList();
@@ -50,5 +50,5 @@ public class SMailer {
         }
       }
     }
-	}
+  }
 }

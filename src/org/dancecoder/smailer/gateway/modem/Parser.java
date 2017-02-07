@@ -4,5 +4,5 @@ import java.util.PrimitiveIterator;
 
 
 public interface Parser {
-	Object parse(PrimitiveIterator.OfInt iterator);
+  Object parse(PrimitiveIterator.OfInt iterator);
 }

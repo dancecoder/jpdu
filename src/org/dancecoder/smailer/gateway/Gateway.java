@@ -7,18 +7,18 @@ import org.dancecoder.smailer.model.UnsupportedEncodingException;
 import org.dancecoder.smailer.model.UssdResponse;
 
 public interface Gateway extends Closeable {
-	
-	public void initialize();
-	
+
+  public void initialize();
+
   @Override
-	public void close();	
-	
-	public UssdResponse sendUssd(String data) throws UnsupportedEncodingException;
-	
-	public void sendSms();
-	
-	public void getSms();
-	
-	public List<MessageListItem> getSmsList();
-	
+  public void close();
+
+  public UssdResponse sendUssd(String data) throws UnsupportedEncodingException;
+
+  public void sendSms();
+
+  public void getSms();
+
+  public List<MessageListItem> getSmsList();
+
 }

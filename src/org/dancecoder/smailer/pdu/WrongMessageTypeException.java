@@ -5,5 +5,5 @@ package org.dancecoder.smailer.pdu;
  * see also 3GPP TS 23.040 [9.2.2]
  */
 public class WrongMessageTypeException extends Exception {
-	
+
 }

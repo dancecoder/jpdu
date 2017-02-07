@@ -1,20 +1,20 @@
 package org.dancecoder.smailer.pdu;
 
 public class UserData {
-	
-	private final byte[] bytes;
-	private final int index;
+
+  private final byte[] bytes;
+  private final int index;
   private final int userDataLength;
   private final boolean containsHeader;
   private final DataCodingScheme codingScheme;
-		
-	public UserData(byte[] bytes, int from, int userDataLength, boolean containsHeader, DataCodingScheme codingScheme) {
-		this.bytes = bytes;
-		this.index = from;
+
+  public UserData(byte[] bytes, int from, int userDataLength, boolean containsHeader, DataCodingScheme codingScheme) {
+    this.bytes = bytes;
+    this.index = from;
     this.userDataLength = userDataLength;
     this.containsHeader = containsHeader;
     this.codingScheme = codingScheme;
-	}
+  }
 
   @Override
   public String toString() {

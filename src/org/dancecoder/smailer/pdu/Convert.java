@@ -8,14 +8,14 @@ public class Convert {
     StringBuilder sb = new StringBuilder(length * 2);
     int b = 0;
     for (int i = first; i < first+length ; i++) {
-			sb.append(bytes[i] & 15);
-			b = bytes[i] >> 4 & 15;
-			if (b == 15) {
-        break;				
-			} else {
+      sb.append(bytes[i] & 15);
+      b = bytes[i] >> 4 & 15;
+      if (b == 15) {
+        break;
+      } else {
         sb.append(b);
       }
-		}
+    }
     return sb.toString();
   }
 
