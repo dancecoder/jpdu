@@ -45,7 +45,7 @@ public class PDU {
   public Address getOriginatingAddress() throws WrongMessageTypeException {
     if (this.getType().getMessageTypeIndicator() == PduType.SMS_DELIVER) {
       if (origAddress == null) {
-        origAddress = TPDUAddress.Create(bytes, mscAddrLength + PDU_TYPE_HDR);
+        origAddress = TPduAddress.Create(bytes, mscAddrLength + PDU_TYPE_HDR);
       }
       return origAddress;
     }
