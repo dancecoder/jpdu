@@ -1,5 +1,6 @@
 package org.dancecoder.smailer.gateway;
 
+import java.util.ArrayList;
 import java.util.List;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
@@ -172,7 +173,14 @@ public class ModemGateway implements SerialPortEventListener, Gateway {
       System.out.println(resp.getAnswers().get("+CMS ERROR"));
       return null;
     } else {
-      List<MessageListItem> msgList = (List<MessageListItem>)resp.getAnswers().get("+CMGL");
+      Object ansv = resp.getAnswers().get("+CMGL");
+      List<MessageListItem> msgList;
+      if (ansv instanceof List) {
+        msgList = (List<MessageListItem>)ansv;
+      } else {
+        msgList = new ArrayList<>(1);
+        msgList.add((MessageListItem)ansv);
+      }
       return msgList;
     }
   }

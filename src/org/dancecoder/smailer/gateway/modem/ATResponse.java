@@ -164,9 +164,9 @@ public class ATResponse {
     Object o = answers.get(c);
     if (o != null) {
       if (o instanceof List) {
-        ((List)o).add(r);
+        ((List<Object>)o).add(r);
       } else {
-        List l = new ArrayList();
+        List<Object> l = new ArrayList<>();
         l.add(o);
         l.add(r);
         answers.put(c, l);

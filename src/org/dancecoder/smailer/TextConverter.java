@@ -26,7 +26,7 @@ public class TextConverter {
     'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', '\u007F'
   };
 
-  private static final char[] HEX_CHAR_TABLE = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+  public static final char[] HEX_CHAR_TABLE = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
   public static String parse(String input, TextEncoding enc) throws IllegalArgumentException
   {

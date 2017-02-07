@@ -4,6 +4,24 @@ import org.dancecoder.smailer.TextConverter;
 
 public class Convert {
 
+  public static String bytesToHexString(byte[] bytes) {
+    return bytesToHexString(bytes, 0, bytes.length);
+  }
+
+  public static String bytesToHexString(byte[] bytes, int first, int length) {
+    char[] output = new char[length * 2];
+    int b;
+    int ii = 0;
+    for (int i = first, max = first + length; i < max; i++) {
+      b = bytes[i] & 0xFF;      
+      output[ii] = TextConverter.HEX_CHAR_TABLE[b >> 4 & 15];
+      ii++;
+      output[ii] = TextConverter.HEX_CHAR_TABLE[b & 15];
+      ii++;
+    }
+    return new String(output);
+  }
+          
   public static String semioctetToString(byte[] bytes, int first, int length) {
     StringBuilder sb = new StringBuilder(length * 2);
     int b = 0;
