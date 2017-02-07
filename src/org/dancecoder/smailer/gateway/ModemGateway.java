@@ -176,7 +176,7 @@ public class ModemGateway implements SerialPortEventListener, Gateway {
 		} else {
 			List<MessageListItem> msgList = (List<MessageListItem>)resp.getAnswers().get("+CMGL");
 			return msgList;
-		}		
+		}
 	}
 	
 	@Override

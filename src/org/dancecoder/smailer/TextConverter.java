@@ -3,7 +3,7 @@ package org.dancecoder.smailer;
 public class TextConverter {
 	
 	// GSM 03.38 version 7.2.0
-	private static final char[] GSM_7BIT_DEFAULT = new char[] { 
+	public static final char[] GSM_7BIT_DEFAULT = new char[] {
 		'@', '£', '$', '¥', 'è', 'é', 'ù', 'ì', 'ò', 'Ç', '\n', 'Ø', 'ø', '\r', 'Å', 'å',
 		'Δ', '\u005F', 'Φ', 'Γ', 'Λ', 'Ω', 'Π', 'Ψ', 'Σ', 'Θ', 'Ξ', '\u001B', 'Æ', 'æ', 'ß', 'É', 
 		' ', '!', '\"', '#', '¤', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', 
@@ -52,12 +52,16 @@ public class TextConverter {
 		}
 	}
 	
-	private static String bytesToUnicode(byte[] input) {
-		char[] output = new char[input.length / 2];
+	public static String bytesToUnicode(byte[] input) {
+    return bytesToUnicode(input, 0, input.length);
+	}
+
+  public static String bytesToUnicode(byte[] input, int from, int length) {
+		char[] output = new char[length / 2];
 		int j;
 		for (int i = 0; i < output.length; i++) {
 			j = i << 1;
-			output[i] = (char)(input[j] << 8 | input[j+1]);
+			output[i] = (char)(input[from + j] << 8 | input[from + j + 1]);
 		}
 		return new String(output);
 	}
@@ -77,10 +81,10 @@ public class TextConverter {
 		return result;
 	}
 	
-	private static String bytesToString(char[] input, char[] table) {
+	private static String bytesToString(int[] input, char[] table) {
 		StringBuilder sb = new StringBuilder(input.length);
 		for (int i = 0; i < input.length; i++) {
-			sb.append(table[input[i]]);
+			sb.append(table[input[i] & 0xFF]);
 		}
 		return sb.toString();
 	}
@@ -122,15 +126,18 @@ public class TextConverter {
 	/**
 	 * Octets to septets unpacking by GSM algorithm
 	 */
-	private static char[] unpack(byte[] input) {
-		char[] output = new char[input.length + input.length / 7];
+  public static int[] unpack(byte[] input) {
+    return unpack(input, 0, input.length);
+  }
+	public static int[] unpack(byte[] input, int first, int length) {
+		int[] output = new int[length + length / 7];
 		byte prev = 0;		
-		for (int i = 0; i < input.length; i++) {			
-			output[i + i/7] = (char)((input[i] << i%7 | (prev >> 8-i%7) & ~(-1 << i%7) ) & 127);
-			prev = input[i];
+		for (int i = 0; i < length; i++) {
+			output[i + i/7] = ((input[i + first] << i%7 | (prev >> 8-i%7) & ~(-1 << i%7) ) & 127);
+			prev = input[i + first];
 		}
-		for (int i = 6; i < input.length; i+=7) {			
-			output[i + 1 + i/7] = (char)((input[i] >> 1) & 127);
+		for (int i = 6; i < length; i+=7) {
+			output[i + 1 + i/7] = ((input[i+first] >> 1) & 127);
 		}
 		return output;
 	}

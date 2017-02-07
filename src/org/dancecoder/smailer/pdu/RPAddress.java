@@ -28,14 +28,7 @@ public class RPAddress extends Address {
 		sb.append(this.getNumberingPlan().toString());
 		sb.append("',");
 		sb.append("number: '");
-		int b;
-		for (int i = from+2; i < from+length+1 ; i++) {			
-			sb.append(this.octets[i] & 15);
-			b = this.octets[i] >> 4 & 15;
-			if (b < 10) {
-				sb.append(this.octets[i] >> 4 & 15);
-			}			
-		}
+    sb.append(Convert.semioctetToString(octets, from+2, length));
 		sb.append("'");
 		sb.append(" }");
 		return sb.toString();

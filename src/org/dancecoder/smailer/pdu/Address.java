@@ -1,7 +1,9 @@
 package org.dancecoder.smailer.pdu;
 
 public abstract class Address {
-	
+
+  public static final int ADDRESS_LENGTH_HDR = 1;
+
 	public enum Type {
 		unknown(0),
 		international(1),
@@ -76,14 +78,14 @@ public abstract class Address {
 	
 	public Type getType() {
 		if (this.type == null) {
-			this.type = Type.valueOf(this.octets[from+1] >> 4 & 7);
+			this.type = Type.valueOf(this.octets[from+ADDRESS_LENGTH_HDR] >> 4 & 7);
 		}
 		return this.type;
 	}
 	
 	public NumberingPlan getNumberingPlan() {
 		if (this.plan == null) {
-			this.plan = NumberingPlan.valueOf(this.octets[from+1] & 15);
+			this.plan = NumberingPlan.valueOf(this.octets[from+ADDRESS_LENGTH_HDR] & 15);
 		}
 		return this.plan;
 	}

@@ -167,6 +167,7 @@ public class ATResponse {
 				((List)o).add(r);
 			} else {
 				List l = new ArrayList();
+        l.add(o);
 				l.add(r);
 				answers.put(c, l);
 			}
