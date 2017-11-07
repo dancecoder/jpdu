@@ -1,41 +1,46 @@
+package org.jpdu.atutils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import org.jpdu.pdu.PDUImpl;
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.jpdu.gateway.modem;
+  Stored messages parser
 
-import java.util.PrimitiveIterator;
-import org.jpdu.model.MessageListItem;
-import org.jpdu.pdu.PDU;
-
-/**
- *
- * @author Odoom
+  See 3gpp 27.005 point 4.1
+  +CMGL: <index>,<stat>,[<alpha>],<length><CR><LF><pdu>
+  [<CR><LF>+CMGL:<index>,<stat>,[<alpha>],<length><CR><LF><pdu>
+  [...]]
  */
-public class MessageListParser implements Parser {
+public class CMGLParser implements Parser {
 
   enum State {
+    begin,
     index,
     stat,
     alpha,
-    length,
-    pdu
+    length,    
+    finished
   }
 
   @Override
-  public Object parse(PrimitiveIterator.OfInt iterator) {
+  public Object parse(InputStream stream) throws IOException {
     StringBuilder buffer = new StringBuilder();
-    int index = -1, stat = -1, alpha = -1, length = -1;
-    State state = State.index;
-    char c = 0;
-    loop: while(iterator.hasNext()) {
-      if (state != State.pdu) {
-        c = (char)iterator.nextInt();
-        if (buffer.length() == 0 && c == ' ') continue;
-        if (c == 13) continue;
-      }
+    int index = -1, stat = -1, alpha = -1;
+    int length;
+    State state = State.begin;
+    PDUImpl pdu = null;
+    char c;
+    do {
+      c = (char)stream.read();
+      if (c == 13) continue;
       switch(state) {
+        case begin:
+          if (c != ' ' && c != 10) {
+            buffer.append(c);
+            state = State.index;
+          }
+          break;
         case index:
           if (c == ',') {
             index = Integer.parseInt(buffer.toString());
@@ -70,19 +75,16 @@ public class MessageListParser implements Parser {
           if (c == 10) {
             length = Integer.parseInt(buffer.toString());
             buffer.setLength(0);
-            state = State.pdu;
+            PduParser pdup = new PduParser(length);
+            pdu = (PDUImpl)pdup.parse(stream);            
+            buffer.setLength(0);
+            state = State.finished;
           } else {
             buffer.append(c);
           }
-          break;
-        case pdu:
-          PduParser pdup = new PduParser();
-          PDU pdu = (PDU)pdup.parse(iterator);
-          buffer.setLength(0);
-          return new MessageListItem(index, stat, length, pdu);
-          //break loop;
+          break;        
       }
-    }
-    return null;
+    } while(c > -1 && state != State.finished);
+    return new ATMessageListItem(index, stat, alpha, pdu);
   }
 }

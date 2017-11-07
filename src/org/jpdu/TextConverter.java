@@ -28,15 +28,15 @@ public class TextConverter {
 
   public static final char[] HEX_CHAR_TABLE = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
-  public static String parse(String input, TextEncoding enc) throws IllegalArgumentException
+  public static String parse(String hex, TextEncoding enc) throws IllegalArgumentException
   {
     switch(enc) {
       case gsm7BitDefaultHex:
-        return bytesToString(unpack(unhex(input)), GSM_7BIT_DEFAULT);
+        return bytesToString(unpack(unhex(hex)), GSM_7BIT_DEFAULT);
       case ira7bitHex:
-        return bytesToString(unpack(unhex(input)), IRA_7BIT);
+        return bytesToString(unpack(unhex(hex)), IRA_7BIT);
       case ucs2Hex:
-        return bytesToUnicode(unhex(input));
+        return bytesToUnicode(unhex(hex));
       default: throw new IllegalArgumentException();
     }
   }
@@ -66,7 +66,7 @@ public class TextConverter {
     return new String(output);
   }
 
-  private static char[] stringToBytes(String input, char[] table) {
+  static char[] stringToBytes(String input, char[] table) {
     int length = input.length();
     char[] result = new char[length];
     for (int i = 0; i < length; i++) {
@@ -145,7 +145,7 @@ public class TextConverter {
   /**
    * Septets to octets packing by GSM algorithm
    */
-  private static char[] pack(char[] input) {
+  static char[] pack(char[] input) {
     char[] output = new char[input.length - input.length / 8];
     int i;
     for (i = 0; i < input.length-1; i++) {

@@ -1,5 +1,6 @@
 package org.jpdu.pdu;
 
+import java.util.Calendar;
 import org.jpdu.Convert;
 
 /**
@@ -59,6 +60,59 @@ public class TimeStamp {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
+    String year = String.valueOf(java.time.LocalDate.now().getYear()).substring(0, 2);
+    sb.append(year);
+
+    int y = this.getYear();
+    if (y < 10) {
+      sb.append('0');
+    }
+    sb.append(y); // last 2 digit
+    sb.append('-');
+
+    int month = this.getMonth();
+    if (month < 10) {
+      sb.append('0');
+    }
+    sb.append(month);
+    sb.append('-');
+
+    int day = this.getDay();
+    if (day < 10) {
+      sb.append('0');
+    }
+    sb.append(day);
+    sb.append('T');
+
+    int hour = this.getHour();
+    if (hour < 10) {
+      sb.append('0');
+    }
+    sb.append(hour);
+    sb.append(':');
+
+    int min = this.getMinute();
+    if (min < 10) {
+      sb.append('0');
+    }
+    sb.append(min);
+    sb.append(':');
+
+    int sek = this.getSecond();
+    if (sek < 10) {
+      sb.append('0');
+    }
+    sb.append(sek);
+
+    int tz = this.getTimeZone();
+    if (tz > 0) {
+      sb.append('+');
+    }
+    if (tz > -10 || tz < 10) {
+      sb.append('0');
+    }
+    sb.append(tz);
+    /*
     sb.append("{ year: ");
     sb.append(this.getYear());
     sb.append(", month: ");
@@ -74,6 +128,7 @@ public class TimeStamp {
     sb.append(", timeZone: ");
     sb.append(this.getTimeZone());    
     sb.append(" }");
+  */
     return sb.toString();
   }
 }

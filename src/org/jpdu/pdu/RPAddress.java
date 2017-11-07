@@ -9,6 +9,8 @@ import org.jpdu.Convert;
 */
 public class RPAddress extends Address {
 
+  private String number;
+
   private RPAddress(byte[] octets, int from, int length) {
     super(octets, from, length);
   }
@@ -18,6 +20,15 @@ public class RPAddress extends Address {
     return new RPAddress(octets, from, octetLength);
   }
 
+  @Override
+  public String getNumber() {
+    if (number == null) {
+      number = Convert.semioctetToString(octets, from+2, length);
+    }
+    return number;
+  }
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{ ");
@@ -28,7 +39,7 @@ public class RPAddress extends Address {
     sb.append(this.getNumberingPlan().toString());
     sb.append("',");
     sb.append("number: '");
-    sb.append(Convert.semioctetToString(octets, from+2, length));
+    sb.append(this.getNumber());
     sb.append("'");
     sb.append(" }");
     return sb.toString();

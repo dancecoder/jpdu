@@ -1,8 +1,8 @@
-package org.jpdu.model;
+package org.jpdu.atutils;
 
-import org.jpdu.pdu.PDU;
+import org.jpdu.pdu.PDUImpl;
 
-public class MessageListItem {
+public class ATMessageListItem {
 
   public enum Status {
   receivedUnread, // 0, received unread message (i.e. new message)
@@ -15,12 +15,12 @@ public class MessageListItem {
 
   private int index;
   private Status status;
-  private int length;
-  private PDU pdu;
+  private int alpha;
+  private PDUImpl pdu;
 
-  public MessageListItem(int index, int stat, int length, PDU pdu) {
+  public ATMessageListItem(int index, int stat, int alpha, PDUImpl pdu) {
     this.index = index;
-    this.length = length;
+    this.alpha = alpha;
     this.pdu = pdu;
     switch(stat) {
       case 0: this.status = Status.receivedUnread; break;
@@ -46,16 +46,16 @@ public class MessageListItem {
   }
 
   /**
-   * @return the length
+   * @return the alpha
    */
-  public int getLength() {
-    return length;
+  public int getAlpha() {
+    return alpha;
   }
 
   /**
    * @return the message
    */
-  public PDU getPdu() {
+  public PDUImpl getPdu() {
     return pdu;
   }
 }

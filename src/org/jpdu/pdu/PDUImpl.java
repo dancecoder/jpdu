@@ -1,6 +1,6 @@
 package org.jpdu.pdu;
 
-public class PDU {
+public class PDUImpl {
 
   // SC - Servise Center
   // MS - Mobail Station
@@ -19,7 +19,7 @@ public class PDU {
   DataCodingScheme codingScheme;
   int mscAddrLength;
 
-  public PDU(byte[] pdu) {
+  public PDUImpl(byte[] pdu) {
     bytes = pdu;
     mscAddress = RPAddress.Create(bytes, 0);
     mscAddrLength = Address.ADDRESS_LENGTH_HDR + mscAddress.getLength();
@@ -129,8 +129,8 @@ public class PDU {
   }
 
   /**
-   * PDU user data part
-   * TP‑UD (see 3GPP TS 23.040 [9.2.3.24])
+   * PDUImpl user data part
+ TP‑UD (see 3GPP TS 23.040 [9.2.3.24])
    * @return user data object
    * @throws org.jpdu.pdu.WrongMessageTypeException
    */
@@ -152,6 +152,10 @@ public class PDU {
       );
     }
     throw new WrongMessageTypeException();
+  }
+
+  public byte[] getBytes() {
+    return this.bytes;
   }
 
 }

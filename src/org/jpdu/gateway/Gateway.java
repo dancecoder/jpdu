@@ -2,11 +2,11 @@ package org.jpdu.gateway;
 
 import java.io.Closeable;
 import java.util.List;
-import org.jpdu.model.MessageListItem;
+import org.jpdu.atutils.ATMessageListItem;
 import org.jpdu.model.UnsupportedEncodingException;
 import org.jpdu.model.UssdResponse;
 
-public interface Gateway extends Closeable {
+public interface Gateway extends Runnable, Closeable {
 
   public void initialize();
 
@@ -19,6 +19,6 @@ public interface Gateway extends Closeable {
 
   public void getSms();
 
-  public List<MessageListItem> getSmsList();
+  public List<ATMessageListItem> getSmsList();
 
 }

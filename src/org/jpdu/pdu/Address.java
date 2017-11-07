@@ -10,7 +10,7 @@ public abstract class Address {
     national(2),
     networkSpecific(3),
     subscriber(4),
-    alphanumeric(5), // coded according to 3GPP TS 23.038 GSM 7‑bit default alphabet
+    alphanumeric(5), // coded according to 3GPP TS 23.038 GSM 7-bit default alphabet
     abbreviated(6),
     reservedForExtension(7);
 
@@ -93,5 +93,7 @@ public abstract class Address {
   public int getLength() {
     return this.length;
   }
+
+  public abstract String getNumber();
 
 }

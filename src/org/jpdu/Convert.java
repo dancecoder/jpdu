@@ -56,4 +56,14 @@ public class Convert {
     return TextConverter.bytesToUnicode(bytes, first, length);
   }
 
+  public static byte[] string2packedGsm7bit(String text) {
+    char[] chars = TextConverter.stringToBytes(text, TextConverter.GSM_7BIT_DEFAULT);
+    chars = TextConverter.pack(chars);
+    byte[] octets = new byte[chars.length];
+    for (int i = 0; i < chars.length; i++) {
+      octets[i] = (byte)chars[i];
+    }
+    return octets;
+  }
+
 }
