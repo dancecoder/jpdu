@@ -1,5 +1,7 @@
 package org.jpdu;
 
+import java.nio.charset.Charset;
+
 public class Convert {
 
   public static String bytesToHexString(byte[] bytes) {
@@ -65,5 +67,10 @@ public class Convert {
     }
     return octets;
   }
+  
+  // todo: create a special Charset
+  //public static int toDefaultAlphabet(String s, byte[] buffer, int offset) {
+  //  Charset.forName(s)
+  //}
 
 }

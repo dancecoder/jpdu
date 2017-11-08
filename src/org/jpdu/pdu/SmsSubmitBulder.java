@@ -6,8 +6,6 @@ import org.jpdu.Convert;
 
 public class SmsSubmitBulder {
 
-  private static int messageReference = 0;
-
   private String recipient;
   private String text;
 
@@ -48,7 +46,7 @@ public class SmsSubmitBulder {
     };
   }
 
-  private  static synchronized PDUImpl createPDU(String text, String destination) {
+  private  static PDUImpl createPDU(String text, String destination) {
 
     byte[] tpUd = Convert.string2packedGsm7bit(text);
     
@@ -60,11 +58,6 @@ public class SmsSubmitBulder {
     byte tpUdhi= (byte)0b0_0_0_00_0_00; // TP-User-Data-Header-Indicator (3gpp 23.040 point 9.2.3.23)
     byte tpRp  = (byte)0b0_0_0_00_0_00; // TP-Reply-Path (3gpp 23.040 point 9.2.3.17)
 
-    // i = 1
-    //messageReference++;
-    //if (messageReference > 255) {
-    //  messageReference = 0;
-    //}
     //byte tpMr = (byte)messageReference; // TP-Message-Reference (3gpp 23.040 point 9.2.3.6)
     byte tpMr = 0; // this should be set by modem
 
@@ -101,7 +94,7 @@ public class SmsSubmitBulder {
     return new PDUImpl(bytes);
   }
 
-  // Transport layer address (3gpp 23.040 point 9.1.2.5)
+  // Transfer layer address (3gpp 23.040 point 9.1.2.5)
   private static byte[] createAddress(String address) {
     int nibbleLength = (byte)address.length();
     int octetLength = nibbleLength % 2 == 0 ? nibbleLength / 2 : nibbleLength / 2 + 1;
